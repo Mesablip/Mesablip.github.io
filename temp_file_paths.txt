@@ -1,0 +1,1 @@
+["temp_image_0.jpg", "temp_image_1.jpg"]

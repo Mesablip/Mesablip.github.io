@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Caption Your Images</title>
+</head>
+<body>
+    <h1>Caption Your Images</h1>
+    
+    <form id="caption-form">
+        {% for file_path in file_paths %}
+            <div class="image-container">
+                <img src="{{ url_for('send_file', filename=file_path) }}" alt="Uploaded image">
+                <input type="text" placeholder="Enter caption">
+            </div>
+        {% endfor %}
+        <button type="button" onclick="submitCaptions()">Submit Captions</button>
+    </form>
+    
+    <script>
+        function submitCaptions() {
+            const captionElems = document.querySelectorAll('input[type="text"]');
+            const captions = Array.from(captionElems).map(elem => elem.value);
+            console.log("Captions: ", JSON.stringcaptions);
+            // Make a POST request to send the captions back to the server
+            fetch('/save_captions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ captions: captions })
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch((error) => console.error('Error:', error));
+            }
+    </script>
+</body>
+</html>

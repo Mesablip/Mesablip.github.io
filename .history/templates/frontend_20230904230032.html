@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Photo Upload</title>
+</head>
+<body>
+
+<h1>Upload multiple photos</h1>
+
+<form enctype="multipart/form-data" action="" method="post" id="upload-form">
+  <! <input type="text" id="user-id" placeholder="Enter your ID">
+  <input type="file" name="photos" multiple id="photos-input">
+  <input type="button" value="Upload" onclick="uploadPhotos()">
+</form>
+
+<script>
+  async function uploadPhotos() {
+    const input = document.getElementById('photos-input');
+    const files = input.files;
+    const formData = new FormData();
+    //const userID = document.getElementById('user-id').value;
+
+    for (let i = 0; i < files.length; i++) {
+      formData.append('photos', files[i]);
+    }
+
+    //formData.append('user_id', userId);
+    
+    const response = await fetch('http://localhost:5000/upload', {
+      method: 'POST',
+      body: formData
+    });
+
+    const data = await response.json();
+    console.log(data);
+  }
+</script>
+
+</body>
+</html>
